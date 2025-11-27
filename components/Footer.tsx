@@ -33,7 +33,7 @@ export default function Footer() {
     { icon: Linkedin, href: '#', label: 'LinkedIn' },
     { icon: Twitter, href: '#', label: 'Twitter' },
     { icon: Github, href: '#', label: 'GitHub' },
-    { icon: Mail, href: 'mailto:info@webmahsul.com', label: 'Email' },
+    { icon: Mail, href: 'mailto:info@webmahsul.com.tr', label: 'Email' },
   ];
 
   const slogans = [

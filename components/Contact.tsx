@@ -13,8 +13,8 @@ export default function Contact() {
     {
       icon: Mail,
       title: 'E-posta',
-      value: 'info@webmahsul.com',
-      href: 'mailto:info@webmahsul.com',
+      value: 'info@webmahsul.com.tr',
+      href: 'mailto:info@webmahsul.com.tr',
     },
     {
       icon: Phone,
