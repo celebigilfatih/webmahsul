@@ -19,7 +19,7 @@ export default function Contact() {
     {
       icon: Phone,
       title: 'Telefon',
-      value: '+90 (555) 123 45 67',
+      value: '+90 (530) 575 83 77',
       href: 'tel:+905551234567',
     },
     {
