@@ -73,7 +73,7 @@ export default function About() {
         >
           <p className="text-xl md:text-2xl text-gray-700 leading-relaxed mb-6">
             <strong className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">Webmahsul</strong>, 
-            modern teknolojiyle şekillenmiş yenilikçi yazılımlar geliştiren bir <strong className="text-gray-900">Ar-Ge merkezi</strong>dir.
+            modern teknolojiyle şekillenmiş yenilikçi yazılımlar geliştiren bir <strong className="text-gray-900">yazılım şirketi</strong>dir.
           </p>
           <p className="text-lg text-gray-600 leading-relaxed">
             Spor kulüplerinden kurumsal işletmelere, kamu kurumlarından özel sektör firmalarına kadar geniş bir yelpazede; 

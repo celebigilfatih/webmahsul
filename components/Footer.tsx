@@ -54,7 +54,7 @@ export default function Footer() {
               <span className="text-2xl font-bold">Webmahsul</span>
             </div>
             <p className="text-gray-400 leading-relaxed mb-6">
-              Modern teknolojiyle şekillenmiş yenilikçi yazılımlar geliştiren Ar-Ge merkeziniz. 
+              Modern teknolojiyle şekillenmiş yenilikçi yazılımlar geliştiren teknoloji partneriniz. 
               Dijital dönüşüm yolculuğunuzda yanınızdayız.
             </p>
             

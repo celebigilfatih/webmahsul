@@ -28,7 +28,7 @@ export default function Hero() {
     {
       title: "Modern Teknoloji ile",
       subtitle: "Yenilikçi Çözümler",
-      description: "Webmahsul, modern teknolojiyle şekillenmiş yenilikçi yazılımlar geliştiren bir Ar-Ge merkezidir. Veriyi anlamlandıran, yönetimi kolaylaştıran ve süreçleri otomatikleştiren çözümler sunuyoruz."
+      description: "Webmahsul, modern teknolojiyle şekillenmiş yenilikçi yazılımlar geliştiren bir yazılım şirketidir. Veriyi anlamlandıran, yönetimi kolaylaştıran ve süreçleri otomatikleştiren çözümler sunuyoruz."
     },
     {
       title: "Dijital Dönüşümünüzü",
