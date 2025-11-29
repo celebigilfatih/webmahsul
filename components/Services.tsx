@@ -49,7 +49,7 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" ref={ref} className="py-24 bg-white">
+    <section id="services" ref={ref} className="py-24 bg-white scroll-mt-24">
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
