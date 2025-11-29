@@ -17,8 +17,6 @@ export default function Footer() {
       { name: 'Turnuva Yönetimi', href: '#services' },
       { name: 'Aidat Takip', href: '#services' },
       { name: 'Spor Kulüpleri CMS', href: '#services' },
-      { name: 'Active Directory', href: '#services' },
-      { name: 'Siber Güvenlik', href: '#services' },
     ],
     'Destek': [
       { name: 'İletişim', href: '#contact' },

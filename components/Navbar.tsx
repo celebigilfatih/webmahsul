@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -12,9 +12,19 @@ const menuItems = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all ${
+      scrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm' : 'bg-transparent'
+    }`}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center h-24 relative">
           {/* Logo - Absolute Left */}
@@ -26,7 +36,9 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Menu - Centered */}
-          <div className="hidden lg:flex items-center space-x-3 bg-gray-300/60 backdrop-blur-md rounded-full px-3 py-2">
+          <div className={`hidden lg:flex items-center space-x-3 rounded-full px-3 py-2 backdrop-blur-md ${
+            scrolled ? 'bg-white/60' : 'bg-gray-300/60'
+          }`}>
             {menuItems.map((item) => (
               <a
                 key={item.name}
