@@ -217,8 +217,8 @@ export default function Hero() {
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
         <div className="flex flex-col items-center gap-2 text-gray-400">
-          <span className="text-sm">Scroll to</span>
-          <span className="text-sm mb-1">explore more</span>
+          <span className="text-sm">Aşağı kaydırın</span>
+          <span className="text-sm mb-1">daha fazlasını keşfedin</span>
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
             <ArrowDown className="w-5 h-5" />
           </motion.div>
