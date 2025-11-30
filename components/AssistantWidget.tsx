@@ -24,6 +24,8 @@ export default function AssistantWidget() {
   const [errors, setErrors] = useState<{ name?: string; contact?: string; email?: string; phone?: string }>({})
   const [countdown, setCountdown] = useState<number | null>(null)
   const [errorText, setErrorText] = useState<string | null>(null)
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([])
+  const [dragIndex, setDragIndex] = useState<number | null>(null)
 
   useEffect(() => {
     if (open && thread.length === 0) {
@@ -36,27 +38,47 @@ export default function AssistantWidget() {
     window.__wmAssistantToggle = () => setOpen((v) => !v)
   }, [])
 
-  const suggestions: { text: string; Icon: React.ComponentType<{ className?: string }> }[] = [
-    { text: 'Hızlı fiyat teklifi', Icon: Sparkles },
-    { text: 'Proje planı hakkında bilgi', Icon: HelpCircle },
-    { text: 'Destek talebi oluştur', Icon: MessageSquare },
+  const suggestions: { text: string; Icon: React.ComponentType<{ className?: string }>; type: 'offer' | 'info' | 'support' }[] = [
+    { text: 'Hızlı fiyat teklifi', Icon: Sparkles, type: 'offer' },
+    { text: 'Proje planı hakkında bilgi', Icon: HelpCircle, type: 'info' },
+    { text: 'Destek talebi oluştur', Icon: MessageSquare, type: 'support' },
   ]
+  const topicPlaceholders: Record<string, string> = {
+    'Hızlı fiyat teklifi': 'Ürün/hizmet, kapsam, zaman ve bütçe bilgilerini yazın',
+    'Proje planı hakkında bilgi': 'Hedefler, zaman çizelgesi ve teknoloji beklentilerini yazın',
+    'Destek talebi oluştur': 'Hata, etkilenen sistem ve aciliyet bilgilerini yazın',
+  }
+  const chipTypeClass: Record<'offer' | 'info' | 'support', string> = {
+    offer: 'bg-orange-50 text-orange-700 border border-orange-200',
+    info: 'bg-blue-50 text-blue-700 border border-blue-200',
+    support: 'bg-rose-50 text-rose-700 border border-rose-200',
+  }
+  const chipAnimClass: Record<'offer' | 'info' | 'support', string> = {
+    offer: 'animate-glow',
+    info: '',
+    support: 'animate-wiggle',
+  }
+  const reorderTopics = (from: number, to: number) => {
+    setSelectedTopics((prev) => {
+      const arr = [...prev]
+      const [m] = arr.splice(from, 1)
+      arr.splice(to, 0, m)
+      return arr
+    })
+  }
 
   const pickSuggestion = (text: string) => {
-    setThread((t) => [
-      ...t,
-      { from: 'user', text },
-      { from: 'assistant', text: 'Talebiniz alındı, size en kısa zamanda dönüş yapacağız. İletişim için adınızı ve e‑posta/telefonunuzu paylaşır mısınız?' },
-    ])
-    setFirstMessage((prev) => prev || text)
-    setStep('contact')
+    setSelectedTopics((prev) => (prev.includes(text) ? prev : [...prev, text]))
+    setStep('chat')
   }
 
   const sendUserMessage = async () => {
-    const msg = userMessage.trim()
-    if (!msg) return
-    setThread((t) => [...t, { from: 'user', text: msg }])
-    setFirstMessage((prev) => prev || msg)
+    const raw = userMessage.trim()
+    const topicsText = selectedTopics.join(', ')
+    const composed = raw || topicsText
+    if (!composed) return
+    setThread((t) => [...t, { from: 'user', text: composed }])
+    if (raw) setFirstMessage((prev) => prev || raw)
     setUserMessage('')
     setThread((t) => [
       ...t,
@@ -78,7 +100,15 @@ export default function AssistantWidget() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, message: firstMessage || userMessage })
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          message: [
+            selectedTopics.length ? `[Konular] ${selectedTopics.join(', ')}` : null,
+            (firstMessage || userMessage) ? `[Mesaj] ${firstMessage || userMessage}` : null,
+          ].filter(Boolean).join('\n')
+        })
       })
       const data = await res.json()
       if (res.ok && data.ok) {
@@ -168,11 +198,58 @@ export default function AssistantWidget() {
               </div>
               {step === 'chat' && (
                 <div className="p-5 border-t border-gray-200">
+                  {selectedTopics.length > 0 && (
+                    <div className="mb-3 flex items-center gap-2 flex-wrap">
+                      {selectedTopics.map((topic, idx) => {
+                        const found = suggestions.find((s) => s.text === topic)
+                        const Ico = found?.Icon || MessageSquare
+                        const type = found?.type || 'info'
+                        const cls = chipTypeClass[type]
+                        const anim = chipAnimClass[type]
+                        return (
+                          <span
+                            key={idx}
+                            draggable
+                            onDragStart={(e) => {
+                              setDragIndex(idx)
+                              e.dataTransfer.effectAllowed = 'move'
+                              e.dataTransfer.setData('text/plain', String(idx))
+                            }}
+                            onDragEnd={() => setDragIndex(null)}
+                            onDragOver={(e) => e.preventDefault()}
+                            onDrop={(e) => {
+                              e.preventDefault()
+                              const from = parseInt(e.dataTransfer.getData('text/plain'), 10)
+                              if (!Number.isNaN(from) && from !== idx) reorderTopics(from, idx)
+                              setDragIndex(null)
+                            }}
+                            className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${cls} ${anim} ${dragIndex === idx ? 'opacity-70' : ''} cursor-move`}
+                          >
+                            <Ico className="w-4 h-4" />
+                            {topic}
+                            <button
+                              aria-label="Konu kaldır"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                setSelectedTopics((prev) => prev.filter((t) => t !== topic))
+                              }}
+                              className="ml-1 p-1 rounded hover:bg-white/40"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          </span>
+                        )
+                      })}
+                      <button aria-label="Tüm konuları temizle" onClick={() => setSelectedTopics([])} className="px-2 py-1 text-xs rounded bg-gray-100 text-gray-700 hover:bg-gray-200">
+                        Temizle
+                      </button>
+                    </div>
+                  )}
                   <div className="flex gap-2">
                     <input
                       value={userMessage}
                       onChange={(e) => setUserMessage(e.target.value)}
-                      placeholder="Mesajınızı yazın"
+                      placeholder={selectedTopics.length === 0 ? 'Mesajınızı yazın' : selectedTopics.length === 1 ? (topicPlaceholders[selectedTopics[0]] || 'Seçilen konu için ayrıntı yazın') : 'Seçilen konular için ayrıntı yazın'}
                       className="flex-1 px-4 py-2 rounded-xl border border-gray-200 focus:border-orange-500 focus:outline-none"
                     />
                     <button

@@ -50,6 +50,26 @@ html {
   animation: blob 7s infinite;
 }
 
+/* Subtle glow for offer chips */
+@keyframes glow {
+  0% { box-shadow: 0 0 0px rgba(249, 115, 22, 0.0); }
+  50% { box-shadow: 0 0 12px rgba(249, 115, 22, 0.35); }
+  100% { box-shadow: 0 0 0px rgba(249, 115, 22, 0.0); }
+}
+.animate-glow {
+  animation: glow 2.4s ease-in-out infinite;
+}
+
+/* Gentle wiggle for support chips */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+.animate-wiggle {
+  animation: wiggle 1.6s ease-in-out infinite;
+}
+
 .animation-delay-2000 {
   animation-delay: 2s;
 }
