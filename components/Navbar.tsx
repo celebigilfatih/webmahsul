@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowUp, MessageCircle } from 'lucide-react';
+import { Menu, X, ArrowUp, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const menuItems = [
@@ -79,7 +79,7 @@ export default function Navbar() {
               onClick={() => window.__wmAssistantOpen?.()}
               className="px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium hover:shadow-lg"
             >
-              <span className="inline-flex items-center gap-2"><MessageCircle className="w-5 h-5" /> Assistant</span>
+              <span className="inline-flex items-center gap-2"><Bot className="w-5 h-5" /> Asistan</span>
             </button>
           </div>
 
@@ -94,9 +94,9 @@ export default function Navbar() {
           <button
             onClick={() => window.__wmAssistantOpen?.()}
             className="lg:hidden ml-2 p-2 rounded-lg hover:bg-gray-100"
-            aria-label="Assistant"
+            aria-label="Asistan"
           >
-            <MessageCircle className="w-6 h-6" />
+            <Bot className="w-6 h-6" />
           </button>
         </div>
       </div>

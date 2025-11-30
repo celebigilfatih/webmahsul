@@ -45,7 +45,7 @@ export default function Contact() {
             >
               <h4 className="text-2xl font-bold mb-4">Hızlı İletişim</h4>
               <p className="leading-relaxed mb-6 max-w-2xl mx-auto">
-                7/24 destek ekibimiz sizin için hazır. Projeleriniz için ücretsiz danışmanlık alın ve Webmahsul Assistant ile hemen yazışın.
+                7/24 destek ekibimiz sizin için hazır. Projeleriniz için ücretsiz danışmanlık alın ve Webmahsul Asistan ile hemen yazışın.
               </p>
               <div className="flex items-center justify-center gap-3">
                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
@@ -55,7 +55,7 @@ export default function Contact() {
                 onClick={() => window.__wmAssistantOpen?.()}
                 className="mt-6 px-6 py-3 bg-white text-orange-700 rounded-full font-medium hover:shadow-lg"
               >
-                Assistant&#39;ı Aç
+                Asistan&#39;ı Aç
               </button>
             </motion.div>
           </motion.div>

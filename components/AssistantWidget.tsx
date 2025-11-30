@@ -139,7 +139,7 @@ export default function AssistantWidget() {
               <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white">
                 <div className="flex items-center gap-2">
                   <Bot className="w-5 h-5" />
-                  <div className="font-semibold">Webmahsul Assistant</div>
+                  <div className="font-semibold">Webmahsul Asistan</div>
                 </div>
                 <button onClick={() => setOpen(false)} aria-label="Kapat" className="p-1 rounded hover:bg-white/20">
                   <X className="w-5 h-5" />
@@ -195,7 +195,7 @@ export default function AssistantWidget() {
                   {errors.phone && <div className="text-xs text-red-600">{errors.phone}</div>}
                   {errors.contact && <div className="text-xs text-red-600">{errors.contact}</div>}
                   <button onClick={submitContact} disabled={sending} className="w-full px-4 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium hover:shadow-lg disabled:opacity-60">
-                    İlet
+                    Gönder
                   </button>
                   {errorText && (
                     <div className="mt-2 text-xs text-red-600">
