@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowUp } from 'lucide-react';
+import { Menu, X, ArrowUp, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const menuItems = [
@@ -58,7 +58,7 @@ export default function Navbar() {
             <span className="text-xl font-bold text-gray-900">Webmahsul</span>
           </div>
 
-          <div className={`hidden lg:flex items-center gap-5 ml-auto`}>
+          <div className={`hidden lg:flex items-center gap-5 flex-1 justify-center`}>
             {menuItems.map((item) => (
               <a
                 key={item.name}
@@ -74,7 +74,14 @@ export default function Navbar() {
             ))}
           </div>
 
-          
+          <div className="hidden lg:flex items-center ml-auto">
+            <button
+              onClick={() => window.__wmAssistantOpen?.()}
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium hover:shadow-lg"
+            >
+              <span className="inline-flex items-center gap-2"><MessageCircle className="w-5 h-5" /> Assistant</span>
+            </button>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -83,6 +90,13 @@ export default function Navbar() {
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+          <button
+            onClick={() => window.__wmAssistantOpen?.()}
+            className="lg:hidden ml-2 p-2 rounded-lg hover:bg-gray-100"
+            aria-label="Assistant"
+          >
+            <MessageCircle className="w-6 h-6" />
           </button>
         </div>
       </div>
@@ -104,9 +118,9 @@ export default function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden z-50 bg-black/70 text-white backdrop-blur-lg border-t border-white/10"
+              className="lg:hidden fixed top-24 left-0 right-0 z-[60] bg-white text-gray-900 border-t border-gray-200 shadow-lg"
             >
-              <div className="px-4 py-4 space-y-2">
+              <div className="px-4 py-4 space-y-2 max-h-[calc(100vh-6rem)] overflow-y-auto">
                 {menuItems.map((item) => (
                   <a
                     key={item.name}
@@ -114,8 +128,8 @@ export default function Navbar() {
                     onClick={() => setIsOpen(false)}
                     className={`block px-4 py-3 rounded-lg transition-colors text-base font-medium ${
                       active === item.href.slice(1)
-                        ? 'bg-orange-500/20 text-orange-200'
-                        : 'text-white hover:bg-white/10'
+                        ? 'bg-orange-50 text-orange-700'
+                        : 'text-gray-900 hover:bg-gray-100'
                     }`}
                   >
                     {item.name}
@@ -126,20 +140,11 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
-      {showTop && !isOpen && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-50 px-4 py-3 bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
-          aria-label="Yukarı çık"
-        >
-          <ArrowUp className="w-5 h-5" />
-        </button>
-      )}
     </nav>
     {showTop && !isOpen && (
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="fixed bottom-6 right-6 z-50 px-4 py-3 bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
+        className="fixed bottom-20 right-6 z-50 px-4 py-3 bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
         aria-label="Yukarı çık"
       >
         <ArrowUp className="w-5 h-5" />
