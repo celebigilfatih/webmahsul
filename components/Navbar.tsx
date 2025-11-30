@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X, ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const menuItems = [
@@ -13,9 +13,41 @@ const menuItems = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [active, setActive] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    const handler = () => {
+      const scrollPos = window.scrollY + 140;
+      let current = 'home';
+      ['home', 'about', 'services', 'contact'].forEach((id) => {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop <= scrollPos) current = id;
+      });
+      setActive(current);
+    };
+    handler();
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 10);
+      setShowTop(y > 400);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 bg-transparent`}>
+    <>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all ${
+      scrolled ? 'bg-white/85 backdrop-blur-md border-b border-gray-200 shadow-sm' : 'bg-transparent'
+    }`}>
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-24">
           {/* Logo - Absolute Left */}
@@ -31,7 +63,11 @@ export default function Navbar() {
               <a
                 key={item.name}
                 href={item.href}
-                className="px-5 py-2.5 text-gray-700 hover:text-orange-600 transition-colors rounded-full text-sm md:text-base font-medium cursor-pointer"
+                className={`px-5 py-2.5 rounded-full text-sm md:text-base font-medium cursor-pointer transition duration-200 transform hover:scale-105 ${
+                  active === item.href.slice(1)
+                    ? 'text-orange-700 bg-orange-50 shadow-sm ring-1 ring-orange-200 ring-offset-2 ring-offset-orange-50'
+                    : 'text-gray-700 hover:text-orange-600 hover:underline underline-offset-4 hover:shadow-sm'
+                }`}
               >
                 {item.name}
               </a>
@@ -54,28 +90,61 @@ export default function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="lg:hidden bg-white/95 backdrop-blur-md border-t border-gray-200"
-          >
-            <div className="px-4 py-4 space-y-2">
-              {menuItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-3 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors text-base font-medium"
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-          </motion.div>
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="lg:hidden z-50 bg-black/70 text-white backdrop-blur-lg border-t border-white/10"
+            >
+              <div className="px-4 py-4 space-y-2">
+                {menuItems.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`block px-4 py-3 rounded-lg transition-colors text-base font-medium ${
+                      active === item.href.slice(1)
+                        ? 'bg-orange-500/20 text-orange-200'
+                        : 'text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
+      {showTop && !isOpen && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="fixed bottom-6 right-6 z-50 px-4 py-3 bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
+          aria-label="Yukarı çık"
+        >
+          <ArrowUp className="w-5 h-5" />
+        </button>
+      )}
     </nav>
+    {showTop && !isOpen && (
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed bottom-6 right-6 z-50 px-4 py-3 bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-full shadow-lg hover:shadow-xl transition-all"
+        aria-label="Yukarı çık"
+      >
+        <ArrowUp className="w-5 h-5" />
+      </button>
+    )}
+  </>
   );
 }
