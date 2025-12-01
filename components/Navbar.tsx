@@ -59,19 +59,23 @@ export default function Navbar() {
           </div>
 
           <div className={`hidden lg:flex items-center gap-5 flex-1 justify-center`}>
-            {menuItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className={`px-5 py-2.5 rounded-full text-sm md:text-base font-medium cursor-pointer transition duration-200 transform hover:scale-105 ${
-                  active === item.href.slice(1)
-                    ? 'text-orange-700 bg-orange-50 shadow-sm ring-1 ring-orange-200 ring-offset-2 ring-offset-orange-50'
-                    : 'text-gray-700 hover:text-orange-600 hover:underline underline-offset-4 hover:shadow-sm'
-                }`}
-              >
-                {item.name}
-              </a>
-            ))}
+            {menuItems.map((item) => {
+              const isContact = item.name === 'İletişim'
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={isContact ? (e) => { e.preventDefault(); window.__wmAssistantOpen?.(); } : undefined}
+                  className={`px-5 py-2.5 rounded-full text-sm md:text-base font-medium cursor-pointer transition duration-200 transform hover:scale-105 ${
+                    active === item.href.slice(1)
+                      ? 'text-orange-700 bg-orange-50 shadow-sm ring-1 ring-orange-200 ring-offset-2 ring-offset-orange-50'
+                      : 'text-gray-700 hover:text-orange-600 hover:underline underline-offset-4 hover:shadow-sm'
+                  }`}
+                >
+                  {item.name}
+                </a>
+              )
+            })}
           </div>
 
           <div className="hidden lg:flex items-center ml-auto">
@@ -93,10 +97,11 @@ export default function Navbar() {
           </button>
           <button
             onClick={() => window.__wmAssistantOpen?.()}
-            className="lg:hidden ml-2 p-2 rounded-lg hover:bg-gray-100"
+            className="lg:hidden ml-2 p-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg hover:shadow-xl transition-all animate-pulse"
             aria-label="Asistan"
+            title="Asistan"
           >
-            <Bot className="w-6 h-6" />
+            <Bot className="w-7 h-7" />
           </button>
         </div>
       </div>
@@ -121,20 +126,29 @@ export default function Navbar() {
               className="lg:hidden fixed top-24 left-0 right-0 z-[60] bg-white text-gray-900 border-t border-gray-200 shadow-lg"
             >
               <div className="px-4 py-4 space-y-2 max-h-[calc(100vh-6rem)] overflow-y-auto">
-                {menuItems.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`block px-4 py-3 rounded-lg transition-colors text-base font-medium ${
-                      active === item.href.slice(1)
-                        ? 'bg-orange-50 text-orange-700'
-                        : 'text-gray-900 hover:bg-gray-100'
-                    }`}
-                  >
-                    {item.name}
-                  </a>
-                ))}
+                {menuItems.map((item) => {
+                  const isContact = item.name === 'İletişim'
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      onClick={(e) => {
+                        if (isContact) {
+                          e.preventDefault();
+                          window.__wmAssistantOpen?.()
+                        }
+                        setIsOpen(false)
+                      }}
+                      className={`block px-4 py-3 rounded-lg transition-colors text-base font-medium ${
+                        active === item.href.slice(1)
+                          ? 'bg-orange-50 text-orange-700'
+                          : 'text-gray-900 hover:bg-gray-100'
+                      }`}
+                    >
+                      {item.name}
+                    </a>
+                  )
+                })}
               </div>
             </motion.div>
           </>

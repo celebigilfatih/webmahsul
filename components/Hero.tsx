@@ -99,7 +99,7 @@ export default function Hero() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
               >
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight text-gray-900">
                   {slides[currentSlide].title}
                   <br />
                   <span className="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">
@@ -109,9 +109,8 @@ export default function Hero() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Large Background Text */}
-            <div className="relative -mt-8">
-              <h2 className="text-[80px] md:text-[120px] lg:text-[160px] font-black text-gray-200/40 leading-none select-none pointer-events-none">
+            <div className="relative md:-mt-8">
+              <h2 className="text-[48px] sm:text-[80px] md:text-[120px] lg:text-[160px] font-black text-gray-200/40 leading-none select-none pointer-events-none">
                 WEBMAHSUL
               </h2>
             </div>
@@ -141,7 +140,7 @@ export default function Hero() {
               <button className="px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg font-medium hover:shadow-xl transition-shadow cursor-pointer">
                 Hemen Başlayın
               </button>
-              <button className="px-8 py-4 bg-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-400 transition-colors cursor-pointer">
+              <button onClick={() => window.__wmAssistantOpen?.()} className="px-8 py-4 bg-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-400 transition-colors cursor-pointer">
                 İletişime Geçin
               </button>
             </motion.div>
