@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Users, PenTool, Trophy, Shield, Network, Code } from 'lucide-react';
+import { Users, PenTool, Trophy, Code } from 'lucide-react';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },

@@ -26,6 +26,7 @@ export default function AssistantWidget() {
   const [errorText, setErrorText] = useState<string | null>(null)
   const [selectedTopics, setSelectedTopics] = useState<string[]>([])
   const [dragIndex, setDragIndex] = useState<number | null>(null)
+  const [hp, setHp] = useState('')
 
   useEffect(() => {
     if (open && thread.length === 0) {
@@ -108,6 +109,7 @@ export default function AssistantWidget() {
             selectedTopics.length ? `[Konular] ${selectedTopics.join(', ')}` : null,
             (firstMessage || userMessage) ? `[Mesaj] ${firstMessage || userMessage}` : null,
           ].filter(Boolean).join('\n')
+          , honeypot: hp
         })
       })
       const data = await res.json()
@@ -264,6 +266,7 @@ export default function AssistantWidget() {
               )}
               {step === 'contact' && (
                 <div className="p-5 border-t border-gray-200 space-y-2">
+                  <input value={hp} onChange={(e) => setHp(e.target.value)} placeholder="Web sitesi" className="hidden" />
                   <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Adınız" className={`w-full px-4 py-2 rounded-xl border ${errors.name ? 'border-red-500' : 'border-gray-200'} focus:border-orange-500 focus:outline-none`} />
                   {errors.name && <div className="text-xs text-red-600">{errors.name}</div>}
                   <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-posta" className={`w-full px-4 py-2 rounded-xl border ${errors.email || errors.contact ? 'border-red-500' : 'border-gray-200'} focus:border-orange-500 focus:outline-none`} />

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDown, Instagram, Facebook, Twitter, Mail, MousePointer, Smile, Zap, MessageCircle, Coffee, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowDown, Mail, MousePointer, Smile, Zap, MessageCircle, Coffee, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
