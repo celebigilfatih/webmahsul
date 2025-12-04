@@ -22,6 +22,19 @@ export const metadata: Metadata = {
     description: "Modern yazılım çözümleri ile dijital dönüşüm yolculuğunuzda yanınızdayız",
     type: "website",
   },
+  icons: {
+    icon: [
+      { url: "/icons/logo-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/logo-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/logo-48.png", sizes: "48x48", type: "image/png" },
+    ],
+    shortcut: "/icons/logo-32.png",
+    apple: [
+      { url: "/icons/logo-180.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+  manifest: "/manifest.json",
+  themeColor: "#f97316",
 };
 
 export default function RootLayout({
