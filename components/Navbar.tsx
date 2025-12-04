@@ -53,8 +53,8 @@ export default function Navbar() {
         <div className="flex items-center h-24">
           {/* Logo - Absolute Left */}
           <div className="flex items-center space-x-3">
-            <div className="inline-flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-2">
-              <Image src="/logo.png" alt="Webmahsul Logo" width={24} height={24} className="h-6 w-auto" priority />
+            <div className="inline-flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-1">
+              <Image src="/logo.png" alt="Webmahsul Logo" width={20} height={20} className="h-5 w-auto" priority />
             </div>
             
             <span className="text-xl font-bold text-gray-900">Webmahsul</span>
