@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, ArrowUp, Bot } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 const menuItems = [
   { name: 'Ana Sayfa', href: '#home' },
@@ -52,9 +53,10 @@ export default function Navbar() {
         <div className="flex items-center h-24">
           {/* Logo - Absolute Left */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">WM</span>
+            <div className="inline-flex items-center justify-center bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg p-2">
+              <Image src="/logo.png" alt="Webmahsul Logo" width={24} height={24} className="h-6 w-auto" priority />
             </div>
+            
             <span className="text-xl font-bold text-gray-900">Webmahsul</span>
           </div>
 
